@@ -101,7 +101,7 @@ export default function ContactSection() {
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-gold/20 transition-colors">
                   <Mail className="w-4 h-4" />
                 </div>
-                <span className="font-mono">rasmus.lindahl@gmail.com</span>
+                <span className="font-mono">rasmus@fivestarimports.se</span>
               </a>
               
               <div className="flex items-center gap-4 text-white/80">
