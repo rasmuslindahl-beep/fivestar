@@ -122,10 +122,12 @@ export default function ContactSection() {
 
           {/* Right Column - Form */}
           <div ref={formCardRef} className="lg:w-3/5">
-            <form 
-              onSubmit={handleSubmit}
-              className="bg-white rounded-3xl p-8 lg:p-10 shadow-card"
-            >
+            <form
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  className="bg-white rounded-3xl p-8 lg:p-10 shadow-card"
+>
+              <input type="hidden" name="access_key" value="3d1b7831-29bf-474f-9802-526bad2f8d71" />
               <div className="grid md:grid-cols-2 gap-5 mb-5">
                 <div>
                   <label className="block text-navy text-sm font-medium mb-2">
