@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Phone, Mail, MapPin, Send } from 'lucide-react';
-import { toast } from 'sonner';
 
 gsap.registerPlugin(ScrollTrigger);
 
