@@ -155,10 +155,6 @@ export default function Hero() {
                 Request a quote
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="text-white/80 hover:text-white underline underline-offset-4 flex items-center gap-2 transition-colors">
-                <Download className="w-4 h-4" />
-                Download specs
-              </button>
             </div>
             
             <p 
