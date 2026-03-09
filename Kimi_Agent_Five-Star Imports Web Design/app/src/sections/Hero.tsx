@@ -16,6 +16,9 @@ export default function Hero() {
   const trustRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+    if (!isDesktop) return;
+
     const section = sectionRef.current;
     const photoCard = photoCardRef.current;
     const textCard = textCardRef.current;
@@ -28,21 +31,24 @@ export default function Hero() {
     if (!section || !photoCard || !textCard || !headline) return;
 
     const ctx = gsap.context(() => {
-      // Initial state (hidden)
       gsap.set([photoCard, textCard], { opacity: 0 });
       gsap.set(photoCard, { x: '-60vw' });
       gsap.set(textCard, { x: '60vw' });
       gsap.set([microLabel, subhead, cta, trust], { opacity: 0, y: 18 });
-      
-      // Split headline into words
-      const words = headline.innerText.split(' ');
-      headline.innerHTML = words.map(word => `<span class="inline-block overflow-hidden"><span class="word inline-block">${word}</span></span>`).join(' ');
+
+      const originalText = headline.innerText;
+      const words = originalText.split(' ');
+      headline.innerHTML = words
+        .map(
+          (word) =>
+            `<span class="inline-block overflow-hidden"><span class="word inline-block">${word}</span></span>`
+        )
+        .join(' ');
       const wordElements = headline.querySelectorAll('.word');
       gsap.set(wordElements, { opacity: 0, y: 40 });
 
-      // Auto-play entrance animation
       const entranceTl = gsap.timeline({ delay: 0.2 });
-      
+
       entranceTl
         .to(photoCard, { x: 0, opacity: 1, duration: 1, ease: 'power3.out' })
         .to(textCard, { x: 0, opacity: 1, duration: 1, ease: 'power3.out' }, '<')
@@ -52,7 +58,6 @@ export default function Hero() {
         .to(cta, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, '-=0.3')
         .to(trust, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, '-=0.2');
 
-      // Scroll-driven exit animation
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -61,7 +66,6 @@ export default function Hero() {
           pin: true,
           scrub: 0.6,
           onLeaveBack: () => {
-            // Reset all elements to visible when scrolling back to top
             gsap.set([photoCard, textCard], { opacity: 1, x: 0, scale: 1 });
             gsap.set(wordElements, { opacity: 1, y: 0 });
             gsap.set([microLabel, subhead, cta, trust], { opacity: 1, y: 0 });
@@ -69,24 +73,25 @@ export default function Hero() {
         }
       });
 
-      // Exit phase (70% - 100%)
       scrollTl
-        .fromTo(photoCard, 
+        .fromTo(
+          photoCard,
           { x: 0, scale: 1, opacity: 1 },
           { x: '-18vw', scale: 0.96, opacity: 0, ease: 'power2.in' },
           0.7
         )
-        .fromTo(textCard,
+        .fromTo(
+          textCard,
           { x: 0, scale: 1, opacity: 1 },
           { x: '18vw', scale: 0.96, opacity: 0, ease: 'power2.in' },
           0.7
         )
-        .fromTo(wordElements,
+        .fromTo(
+          wordElements,
           { y: 0, opacity: 1 },
           { y: '-10vh', opacity: 0, stagger: 0.02, ease: 'power2.in' },
           0.7
         );
-
     }, section);
 
     return () => ctx.revert();
@@ -100,45 +105,85 @@ export default function Hero() {
   };
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       id="hero"
-      className="relative w-full h-screen bg-off-white overflow-hidden z-10"
+      className="relative w-full min-h-screen md:h-screen bg-off-white overflow-hidden z-10"
     >
-      <div className="absolute inset-0 flex items-center justify-center px-[6vw]">
-        {/* Photo Card - Left */}
-        <div 
+      {/* Mobile Hero */}
+      <div className="md:hidden px-5 pt-24 pb-10 space-y-5">
+        <div className="rounded-3xl overflow-hidden shadow-card">
+          <img
+            src="/hero_cacao_pods.jpg"
+            alt="Cacao pods on branch"
+            className="w-full h-[46vh] object-cover"
+          />
+        </div>
+
+        <div className="rounded-3xl bg-navy shadow-card p-6 flex flex-col gap-6">
+          <div>
+            <span className="micro-label text-gold block mb-4">
+              ECUADOR → EUROPE
+            </span>
+
+            <h1 className="text-white text-4xl leading-[0.95] font-heading font-bold mb-5">
+              Traceable cacao, coffee & panela
+            </h1>
+
+            <p className="text-white/80 text-lg leading-relaxed">
+              Direct-from-producer supply for European chocolate makers, roasters, and food manufacturers.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-5">
+            <button
+              onClick={scrollToContact}
+              className="group bg-gold hover:bg-gold/90 text-navy px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2 transition-all duration-300"
+            >
+              Request a quote
+              <ArrowRight className="w-4 h-4 transition-transform" />
+            </button>
+
+            <p className="text-white/50 text-sm font-mono">
+              EUDR-ready documentation • Farm-level traceability
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Hero */}
+      <div className="absolute inset-0 hidden md:flex items-center justify-center px-[6vw]">
+        <div
           ref={photoCardRef}
           className="absolute left-[6vw] top-[10vh] w-[40vw] h-[80vh] rounded-3xl overflow-hidden shadow-card"
         >
-          <img 
-            src="/hero_cacao_pods.jpg" 
+          <img
+            src="/hero_cacao_pods.jpg"
             alt="Cacao pods on branch"
             className="w-full h-full object-cover"
           />
         </div>
 
-        {/* Text Card - Right */}
-        <div 
+        <div
           ref={textCardRef}
           className="absolute left-[50vw] top-[10vh] w-[44vw] h-[80vh] rounded-3xl bg-navy shadow-card p-[clamp(28px,3.2vw,56px)] flex flex-col justify-between"
         >
           <div>
-            <span 
+            <span
               ref={microLabelRef}
               className="micro-label text-gold block mb-6"
             >
               ECUADOR → EUROPE
             </span>
-            
-            <h1 
+
+            <h1
               ref={headlineRef}
               className="text-white text-[clamp(36px,4vw,64px)] leading-[0.95] font-heading font-bold mb-6"
             >
               Traceable cacao, coffee & panela
             </h1>
-            
-            <p 
+
+            <p
               ref={subheadRef}
               className="text-white/80 text-lg leading-relaxed max-w-md"
             >
@@ -148,7 +193,7 @@ export default function Hero() {
 
           <div>
             <div ref={ctaRef} className="flex items-center gap-6 mb-8">
-              <button 
+              <button
                 onClick={scrollToContact}
                 className="group bg-gold hover:bg-gold/90 text-navy px-6 py-3 rounded-full font-medium flex items-center gap-2 transition-all duration-300 hover:-translate-y-0.5"
               >
@@ -156,8 +201,8 @@ export default function Hero() {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
-            
-            <p 
+
+            <p
               ref={trustRef}
               className="text-white/50 text-sm font-mono"
             >
