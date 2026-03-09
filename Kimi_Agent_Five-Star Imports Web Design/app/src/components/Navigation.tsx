@@ -51,10 +51,10 @@ export default function Navigation() {
             className="flex items-center gap-2"
           >
             <img 
-              src="/logo.png" 
-              alt="Five-Star Imports" 
-              className="h-8 w-auto"
-            />
+  src="/logo.png" 
+  alt="Five-Star Imports" 
+  className="h-12 md:h-16 w-auto"
+/>
             <span className={`font-heading font-semibold text-sm hidden sm:block transition-colors ${
               isScrolled ? 'text-navy' : 'text-navy'
             }`}>
