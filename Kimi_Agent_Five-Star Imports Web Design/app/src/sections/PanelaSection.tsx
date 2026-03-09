@@ -13,6 +13,9 @@ export default function PanelaSection() {
   const bulletsRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+    if (!isDesktop) return;
+
     const section = sectionRef.current;
     const textCard = textCardRef.current;
     const photoCard = photoCardRef.current;
@@ -34,42 +37,43 @@ export default function PanelaSection() {
         }
       });
 
-      // Entrance phase (0% - 30%)
       scrollTl
-        .fromTo(textCard,
+        .fromTo(
+          textCard,
           { x: '-60vw', opacity: 0 },
           { x: 0, opacity: 1, ease: 'none' },
           0
         )
-        .fromTo(photoCard,
+        .fromTo(
+          photoCard,
           { x: '60vw', opacity: 0 },
           { x: 0, opacity: 1, ease: 'none' },
           0
         )
-        .fromTo(headline,
+        .fromTo(
+          headline,
           { y: 60, opacity: 0 },
           { y: 0, opacity: 1, ease: 'none' },
           0.05
         )
-        .fromTo(bulletItems,
+        .fromTo(
+          bulletItems,
           { x: -40, opacity: 0 },
           { x: 0, opacity: 1, stagger: 0.02, ease: 'none' },
           0.1
-        );
-
-      // Exit phase (70% - 100%)
-      scrollTl
-        .fromTo(textCard,
+        )
+        .fromTo(
+          textCard,
           { x: 0, opacity: 1 },
           { x: '-18vw', opacity: 0, ease: 'power2.in' },
           0.7
         )
-        .fromTo(photoCard,
+        .fromTo(
+          photoCard,
           { x: 0, opacity: 1 },
           { x: '18vw', opacity: 0, ease: 'power2.in' },
           0.7
         );
-
     }, section);
 
     return () => ctx.revert();
@@ -83,14 +87,63 @@ export default function PanelaSection() {
   };
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       id="panela"
-      className="relative w-full h-screen bg-off-white overflow-hidden z-40"
+      className="relative w-full min-h-screen md:h-screen bg-off-white overflow-hidden z-40"
     >
-      <div className="absolute inset-0 flex items-center justify-center px-[6vw]">
+      {/* Mobile Layout */}
+      <div className="md:hidden px-5 pt-24 pb-10 space-y-5">
+        <div className="rounded-3xl overflow-hidden shadow-card">
+          <img
+            src="/panela_sugar.jpg"
+            alt="Panela sugar"
+            className="w-full h-[46vh] object-cover"
+          />
+        </div>
+
+        <div className="rounded-3xl bg-navy shadow-card p-6 flex flex-col gap-6">
+          <div>
+            <span className="micro-label text-gold block mb-4">
+              UNREFINED CANE SUGAR
+            </span>
+
+            <h2 className="text-white text-4xl leading-[1] font-heading font-bold mb-5">
+              Panela
+            </h2>
+
+            <p className="text-white/80 text-lg leading-relaxed mb-6">
+              Traditional whole-cane sugar with a caramel-molasses character—minimal processing, maximum transparency.
+            </p>
+
+            <ul className="space-y-3">
+              {[
+                'Organic & conventional grades',
+                'Blocks, granules, or custom sizing',
+                'Clean label sweetener for food & beverage'
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-3 text-white/70">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <button
+            onClick={scrollToContact}
+            className="group bg-gold hover:bg-gold/90 text-navy px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2 transition-all duration-300"
+          >
+            Request panela specs
+            <ArrowRight className="w-4 h-4 transition-transform" />
+          </button>
+        </div>
+      </div>
+
+      {/* Desktop Layout */}
+      <div className="absolute inset-0 hidden md:flex items-center justify-center px-[6vw]">
         {/* Text Card - Left */}
-        <div 
+        <div
           ref={textCardRef}
           className="absolute left-[6vw] top-[10vh] w-[40vw] h-[80vh] rounded-3xl bg-navy shadow-card p-[clamp(28px,3.2vw,56px)] flex flex-col justify-between"
         >
@@ -98,18 +151,18 @@ export default function PanelaSection() {
             <span className="micro-label text-gold block mb-6">
               UNREFINED CANE SUGAR
             </span>
-            
-            <h2 
+
+            <h2
               ref={headlineRef}
               className="text-white text-[clamp(42px,4.5vw,72px)] leading-[1] font-heading font-bold mb-6"
             >
               Panela
             </h2>
-            
+
             <p className="text-white/80 text-lg leading-relaxed max-w-md mb-8">
               Traditional whole-cane sugar with a caramel-molasses character—minimal processing, maximum transparency.
             </p>
-            
+
             <ul ref={bulletsRef} className="space-y-3">
               {[
                 'Organic & conventional grades',
@@ -124,7 +177,7 @@ export default function PanelaSection() {
             </ul>
           </div>
 
-          <button 
+          <button
             onClick={scrollToContact}
             className="group bg-gold hover:bg-gold/90 text-navy px-6 py-3 rounded-full font-medium flex items-center gap-2 w-fit transition-all duration-300 hover:-translate-y-0.5"
           >
@@ -134,12 +187,12 @@ export default function PanelaSection() {
         </div>
 
         {/* Photo Card - Right */}
-        <div 
+        <div
           ref={photoCardRef}
           className="absolute left-[50vw] top-[10vh] w-[44vw] h-[80vh] rounded-3xl overflow-hidden shadow-card"
         >
-          <img 
-            src="/panela_sugar.jpg" 
+          <img
+            src="/panela_sugar.jpg"
             alt="Panela sugar"
             className="w-full h-full object-cover animate-slow-zoom"
           />
