@@ -155,7 +155,7 @@ export default function OriginSection() {
         <div ref={cardARef} className="flex flex-col lg:flex-row gap-0 mb-12 rounded-3xl overflow-hidden shadow-card">
           <div className="card-image w-full lg:w-1/2 h-[40vh] lg:h-[52vh]">
             <img 
-              src="/origin_farm.jpg" 
+              src="/origin_farm.png" 
               alt="Ecuadorian farm landscape"
               className="w-full h-full object-cover"
             />
