@@ -114,7 +114,7 @@ export default function Hero() {
       <div className="md:hidden px-5 pt-24 pb-10 space-y-5">
         <div className="rounded-3xl overflow-hidden shadow-card">
           <img
-            src="/hero_cacao_pods.jpg"
+            src="/hero_cacao_pods.png"
             alt="Cacao pods on branch"
             className="w-full h-[46vh] object-cover"
           />
