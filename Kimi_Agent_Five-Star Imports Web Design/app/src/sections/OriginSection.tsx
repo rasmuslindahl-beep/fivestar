@@ -190,7 +190,7 @@ export default function OriginSection() {
           </div>
           <div className="card-text w-full lg:w-1/2 bg-navy p-8 lg:p-12 flex flex-col justify-center">
             <p className="text-white/90 text-lg leading-relaxed mb-6">
-              Founded by Rasmus Lindahl after years working in Ecuador on sustainability and environmental projects.
+              Founded by David Oja and Rasmus Lindahl after years working in Ecuador on sustainability and environmental projects.
             </p>
             <p className="text-white/70 leading-relaxed mb-8">
               Today, we connect those relationships with European buyers who value transparency.
