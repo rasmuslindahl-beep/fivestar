@@ -158,7 +158,7 @@ export default function Hero() {
           className="absolute left-[6vw] top-[10vh] w-[40vw] h-[80vh] rounded-3xl overflow-hidden shadow-card"
         >
           <img
-            src="/hero_cacao_pods.jpg"
+            src="/hero_cacao_pods.png"
             alt="Cacao pods on branch"
             className="w-full h-full object-cover"
           />
