@@ -37,12 +37,12 @@ export default function Navigation() {
     <>
       {/* Fixed Navigation */}
       <nav 
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
-          isScrolled 
-            ? 'bg-off-white/90 backdrop-blur-md shadow-sm' 
-            : 'bg-transparent'
-        }`}
-      >
+  className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+    isScrolled 
+      ? 'bg-off-white/90 backdrop-blur-md shadow-sm py-3' 
+      : 'bg-transparent py-5'
+  }`}
+>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           {/* Logo */}
           <a 
@@ -53,7 +53,9 @@ export default function Navigation() {
             <img 
   src="/logo.png" 
   alt="Five-Star Imports" 
-  className="h-12 md:h-16 w-auto"
+  className={`w-auto transition-all duration-500 ${
+    isScrolled ? 'h-10 md:h-12' : 'h-14 md:h-20'
+  }`}
 />
             <span className={`font-heading font-semibold text-sm hidden sm:block transition-colors ${
               isScrolled ? 'text-navy' : 'text-navy'
